@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>炸金花 · 玩法与辨识</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #f0faf9;
+            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+            line-height: 1.6;
+            color: #1b2b2f;
+            padding: 1.2rem;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .page-wrapper {
+            max-width: 780px;
+            width: 100%;
+            background: #ffffff;
+            border-radius: 2.8rem 2.8rem 2rem 2rem;
+            box-shadow: 0 10px 28px -8px rgba(22, 67, 72, 0.12);
+            overflow: hidden;
+            padding: 2rem 1.8rem 2.4rem;
+            transition: all 0.1s ease;
+        }
+
+        /* 蓝绿点缀体系 */
+        .accent-dot {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            background: #3ba9a0;
+            border-radius: 50%;
+            margin-right: 6px;
+            vertical-align: middle;
+        }
+
+        .accent-stripe {
+            height: 4px;
+            width: 56px;
+            background: linear-gradient(90deg, #3ba9a0, #6ac7be);
+            border-radius: 4px;
+            margin: 1rem 0 0.6rem;
+        }
+
+        .hero-tag {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 1.2rem;
+        }
+
+        .hero-tag span {
+            font-size: 0.8rem;
+            background: #dcf4f0;
+            color: #1f6d67;
+            padding: 0.2rem 0.8rem;
+            border-radius: 40px;
+            letter-spacing: 0.2px;
+            font-weight: 500;
+        }
+
+        h1 {
+            font-size: 2.4rem;
+            font-weight: 530;
+            letter-spacing: -0.02em;
+            color: #0d3c3a;
+            line-height: 1.2;
+            margin-bottom: 0.3rem;
+        }
+
+        .subhead {
+            font-size: 1rem;
+            color: #3e6763;
+            font-weight: 400;
+            border-left: 3px solid #6ac7be;
+            padding-left: 1rem;
+            margin: 0.5rem 0 1.5rem 0;
+        }
+
+        .story-lead {
+            background: #f6fcfb;
+            padding: 1.4rem 1.4rem 1.2rem;
+            border-radius: 28px;
+            margin: 0.8rem 0 1.4rem;
+            box-shadow: inset 0 2px 6px rgba(59, 169, 160, 0.04);
+        }
+
+        .lead-text {
+            font-size: 1.1rem;
+            color: #184843;
+            font-weight: 440;
+        }
+
+        .lead-text strong {
+            color: #1d7d74;
+            font-weight: 550;
+        }
+
+        .bridge-paragraph {
+            margin: 1.2rem 0 1.6rem;
+            font-size: 0.98rem;
+            color: #2c4f4b;
+            padding: 0 0.2rem;
+        }
+
+        .card-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin: 1.8rem 0 2rem;
+        }
+
+        .card {
+            background: #f5fbfa;
+            border-radius: 24px;
+            padding: 1.3rem 0.9rem 1rem;
+            border: 1px solid #d7ece8;
+            transition: 0.15s ease;
+            box-shadow: 0 2px 6px rgba(33, 94, 89, 0.02);
+        }
+
+        .card:hover {
+            border-color: #89cfc4;
+            background: #edf9f6;
+        }
+
+        .card-title {
+            font-weight: 530;
+            color: #0b4a44;
+            letter-spacing: -0.01em;
+            margin-bottom: 0.4rem;
+            font-size: 1.08rem;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .card-title::before {
+            content: "◇";
+            color: #3ba9a0;
+            font-size: 1.1rem;
+        }
+
+        .card p {
+            font-size: 0.9rem;
+            color: #2e5a55;
+            line-height: 1.5;
+        }
+
+        .insight-box {
+            background: linear-gradient(145deg, #e0f3ef, #f3fcf9);
+            border-radius: 32px;
+            padding: 1.5rem 1.5rem 1.3rem;
+            margin: 1.8rem 0 0.6rem;
+            border-left: 6px solid #3ba9a0;
+        }
+
+        .insight-box h3 {
+            font-weight: 480;
+            font-size: 1.15rem;
+            color: #074a42;
+            margin-bottom: 0.5rem;
+        }
+
+        .insight-box p {
+            font-size: 0.95rem;
+            color: #1d564f;
+            margin-bottom: 0.4rem;
+        }
+
+        .faq-mini {
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+            margin: 1.6rem 0 1.2rem;
+            padding: 0.2rem 0;
+        }
+
+        .faq-item {
+            background: #ffffff;
+            border-radius: 40px;
+            padding: 0.8rem 1.2rem;
+            border: 1px solid #cde3de;
+            font-size: 0.92rem;
+            color: #1d4c46;
+        }
+
+        .faq-item span {
+            font-weight: 520;
+            color: #0c5b51;
+            margin-right: 0.6rem;
+        }
+
+        .soft-link-sentence {
+            background: #f4fcf9;
+            padding: 1.2rem 1.5rem;
+            border-radius: 60px;
+            margin: 2rem 0 1rem;
+            text-align: center;
+            border: 1px solid #b7dad2;
+            font-size: 1.02rem;
+            color: #154f48;
+        }
+
+        a {
+            color: #1b7d72;
+            text-decoration: none;
+            font-weight: 530;
+            border-bottom: 2px solid transparent;
+            transition: 0.1s;
+        }
+
+        a:hover {
+            border-bottom-color: #3ba9a0;
+            color: #075048;
+        }
+
+        .footer-note {
+            margin-top: 1.2rem;
+            font-size: 0.85rem;
+            color: #57837d;
+            text-align: center;
+            letter-spacing: 0.2px;
+        }
+
+        /* 移动端紧凑 */
+        @media (max-width: 500px) {
+            .page-wrapper {
+                padding: 1.5rem 1rem 1.8rem;
+                border-radius: 2rem;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            .card-grid {
+                grid-template-columns: 1fr;
+                gap: 0.9rem;
+            }
+
+            .card {
+                padding: 1rem 0.8rem 0.9rem;
+            }
+
+            .story-lead {
+                padding: 1rem;
+            }
+
+            .insight-box {
+                padding: 1.2rem;
+            }
+
+            .soft-link-sentence {
+                font-size: 0.96rem;
+                padding: 1rem 0.8rem;
+            }
+        }
+
+        @media (max-width: 380px) {
+            h1 {
+                font-size: 1.7rem;
+            }
+
+            .subhead {
+                font-size: 0.9rem;
+                padding-left: 0.6rem;
+            }
+
+            .lead-text {
+                font-size: 1rem;
+            }
+
+            .card-title {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="page-wrapper">
+    <!-- 开场短句 + 识别线索 -->
+    <div class="hero-tag">
+        <span>🎴 快速识别</span>
+        <span class="accent-dot"></span>
+        <span style="background: #c5ece4;">牌型 · 博弈</span>
+    </div>
+    <h1>炸金花<br>从牌面读懂玩法</h1>
+    <div class="subhead">
+        一种以三张手牌比大小的传统扑克游戏
+    </div>
+
+    <!-- 承接段落：用户如何辨认网站用途 -->
+    <div class="story-lead">
+        <p class="lead-text">
+            当你第一次看到 <strong>“炸金花”</strong> 这个名字，很可能想知道：这是一个提供规则讲解、概率分析，还是实战模拟的站点？<br>
+            实际上，它围绕一副扑克去掉大小王后的经典比牌逻辑展开。你不需要事先了解任何术语，因为所有内容都从零开始梳理。
+        </p>
+    </div>
+
+    <div class="bridge-paragraph">
+        很多人会混淆“炸金花”与“诈金花”或“赢三张”的细微差异。其实它们指向同一套牌型体系：豹子、同花顺、金花、顺子、对子、单张。而网站的价值在于把每一条牌型边界、花色权重、以及常见误区拆解清晰。
+    </div>
+
+    <!-- 特点列表：网格卡片 -->
+    <div class="card-grid">
+        <div class="card">
+            <div class="card-title">牌型速查</div>
+            <p>豹子 > 同花顺 > 金花 > 顺子 > 对子 > 散牌。A23 在顺子中仅次 A K Q，且花色通常不参与大小（特殊规则除外）。</p>
+        </div>
+        <div class="card">
+            <div class="card-title">比牌逻辑</div>
+            <p>玩家之间可选择“比牌”或“闷牌”，心理博弈与概率各占一半。网站会说明不同位置（庄、闲）的胜率轮廓。</p>
+        </div>
+        <div class="card">
+            <div class="card-title">概率参考</div>
+            <p>一副牌（52张）随机三张，出现金花的概率约为 5.18%，豹子约 0.24%。数字有助于你判断下注节奏。</p>
+        </div>
+        <div class="card">
+            <div class="card-title">常见变体</div>
+            <p>部分玩法加入“喜钱”、“235”克制豹子的特殊规则，网站摘要中会加以区分，避免一锅乱炖。</p>
+        </div>
+    </div>
+
+    <!-- 温和的 FAQ 摘要 -->
+    <div class="faq-mini">
+        <div class="faq-item"><span>❓ 适合新手吗？</span> 内容从牌面名称到大小排序逐步解释，且有图示辅助理解。</div>
+        <div class="faq-item"><span>❓ 是否有实时对战？</span> 网站侧重知识型介绍，不提供真钱或即时对战，所有示例均为教学用途。</div>
+        <div class="faq-item"><span>❓ 术语看不懂？</span> 页面中每个专业词（如 “金花” 指同花）都会在第一次出现时附带简短说明。</div>
+    </div>
+
+    <!-- 场景 + 提示 温和结尾 -->
+    <div class="insight-box">
+        <h3>🧩 适合哪些场景？</h3>
+        <p>▪ 想快速梳理炸金花规则框架，作为牌局前的规则确认。<br>
+        ▪ 与朋友争论“同花顺是否比金花大”时，直接查证牌型列表。<br>
+        ▪ 了解概率分布，优化自己“跟注”或“弃牌”的判断依据。</p>
+        <p style="margin-top: 0.6rem;">—— 所有内容皆基于标准扑克玩法，不涉及赌博、误导或承诺高胜率。</p>
+    </div>
+
+    <!-- 自然嵌入链接的句子（严格使用“炸金花”为可见文本） -->
+    <div class="soft-link-sentence">
+        🃏 若想深入查阅完整牌型图解与概率表，可直接了解 <a href="https://m-goldenflowers.com">炸金花</a> 的核心说明。
+    </div>
+
+    <div class="footer-note">
+        页面内容仅供认知参考 · 保持理性游戏态度
+    </div>
+</div>
+</body>
+</html>
